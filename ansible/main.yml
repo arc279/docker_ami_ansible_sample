@@ -1,0 +1,26 @@
+---
+- hosts: servers
+  become: yes
+  # gather_facts: false
+
+  vars:
+    ruby_version: 2.5.0
+
+  tasks:
+    - yum: name=epel-release state=installed
+    - yum: name={{ item }} state=installed
+      with_items:
+        - git
+        - autoconf
+        - automake
+        - libtool
+        - zlib-devel
+        - openssl-devel
+        - readline-devel
+        - bzip2
+
+    - import_tasks: playbooks/rbenv.yml
+      become_user: ec2-user
+      vars:
+        rbenv_config: ~/.rbenv.sh
+

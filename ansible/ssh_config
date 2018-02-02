@@ -1,0 +1,8 @@
+Host ec2-sample
+  HostName       localhost
+  Port           2222
+  User           ec2-user
+  IdentityFile   ../container/ec2_sample/id_rsa
+  IdentitiesOnly yes
+  LogLevel FATAL
+

@@ -1,0 +1,28 @@
+---
+- name: install rbenv
+  git:
+    repo: https://github.com/rbenv/rbenv
+    dest: ~/.rbenv
+
+- name: install ruby-build
+  git:
+    repo: https://github.com/sstephenson/ruby-build
+    dest: ~/.rbenv/plugins/ruby-build
+
+- name: setup rbenv
+  shell: |
+    {
+        echo 'export RBENV_ROOT=~/.rbenv'
+        echo 'export PATH=$RBENV_ROOT/bin:$PATH'
+        echo 'eval "$(rbenv init -)"'
+    } > {{rbenv_config}}
+    echo "source {{rbenv_config}}" >> ~/.bashrc
+  args:
+    creates: "{{rbenv_config}}"
+
+- name: install ruby
+  shell: |
+    source {{rbenv_config}}
+    rbenv install {{ruby_version}}
+    rbenv rehash
+    rbenv global {{ruby_version}}

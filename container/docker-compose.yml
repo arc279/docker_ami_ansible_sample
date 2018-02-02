@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  sample:
+    image: kuryu/ec2-sample
+    container_name: ec2-sample
+    ports:
+      - "2222:22"
+      - "3000:3000"
+    volumes:
+      - ../app/:/home/ec2-user/app
